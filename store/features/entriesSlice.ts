@@ -1,23 +1,19 @@
 import { createSlice } from '@reduxjs/toolkit'
 
 export interface CounterState {
-  open: boolean
+  entries: [] // TODO: falta el tipo de datos
 }
 
 const initialState: CounterState = {
-  open: false
+  entries: []
 }
 
 export const menuSlice = createSlice({
-  name: 'menu',
+  name: 'entries',
   initialState,
-  reducers: {
-    toggleMenu: state => {
-      state.open = !state.open
-    }
-  }
+  reducers: {}
 })
 
-export const { toggleMenu } = menuSlice.actions
+// export const {} = menuSlice.actions
 
 export default menuSlice.reducer
