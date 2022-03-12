@@ -11,7 +11,7 @@ const initialState: CounterState = {
     {
       id: uuidv4(),
       description:
-        'Anim laborum exercitation elit Lorem deserunt sit laboris enim duis.',
+        'pendiente: Anim laborum exercitation elit Lorem deserunt sit laboris enim duis.',
       status: 'pending',
       createdAt: Date.now(),
       updatedAt: Date.now()
@@ -19,14 +19,31 @@ const initialState: CounterState = {
     {
       id: uuidv4(),
       description:
-        'Pariatur magna eiusmod veniam laboris sint aute commodo non cupidatat officia.',
+        'pendiente: Anim laborum exercitation elit Lorem deserunt sit laboris enim duis.',
+      status: 'pending',
+      createdAt: Date.now(),
+      updatedAt: Date.now()
+    },
+    {
+      id: uuidv4(),
+      description:
+        'En progreso: Pariatur magna eiusmod veniam laboris sint aute commodo non cupidatat officia.',
       status: 'in-progress',
       createdAt: Date.now(),
       updatedAt: Date.now()
     },
     {
       id: uuidv4(),
-      description: 'Ipsum aute eu labore minim incididunt occaecat culpa.',
+      description:
+        'finalizado: Ipsum aute eu labore minim incididunt occaecat culpa.',
+      status: 'finished',
+      createdAt: Date.now(),
+      updatedAt: Date.now()
+    },
+    {
+      id: uuidv4(),
+      description:
+        'finalizado: Ipsum aute eu labore minim incididunt occaecat culpa.',
       status: 'finished',
       createdAt: Date.now(),
       updatedAt: Date.now()

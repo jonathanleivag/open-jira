@@ -1,9 +1,9 @@
-import { statusType } from '../types'
+import { StatusType } from '../types'
 
 export interface EntryInterface {
   id: string
   description: string
-  status: statusType
+  status: StatusType
   createdAt: number
   updatedAt: number
 }

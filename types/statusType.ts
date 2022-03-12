@@ -1,1 +1,1 @@
-export type statusType = 'pending' | 'in-progress' | 'finished'
+export type StatusType = 'pending' | 'in-progress' | 'finished'
