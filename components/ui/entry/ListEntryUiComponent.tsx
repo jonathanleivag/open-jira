@@ -1,7 +1,10 @@
 import { DragEvent, FC, useMemo } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { CardEntryUiComponent, NewEntry } from '../..'
-import { draggingAction } from '../../../store/features/entriesSlice'
+import {
+  draggingAction,
+  updateEntry
+} from '../../../store/features/entriesSlice'
 import { RootState } from '../../../store/index'
 import { StatusType } from '../../../types'
 
@@ -25,18 +28,19 @@ export const ListEntryUiComponent: FC<ListEntryUiComponentProps> = ({
   )
 
   const onDragEntry = (event: DragEvent<HTMLUListElement>) => {
-    // const id = event.dataTransfer.getData('entryId')
+    const id = event.dataTransfer.getData('entryId')
+    dispatch(updateEntry({ id, status }))
     dispatch(draggingAction(false))
   }
 
   return (
     <>
-      <h2 className='p-2 '> {title} </h2>
+      <h2 className='p-2'> {title} </h2>
       <NewEntry status={status} />
       <ul
         onDrop={onDragEntry}
         onDragOver={event => event.preventDefault()}
-        className={`w-full h-[calc(100vh-150px)] ${
+        className={`transform duration-500 ease-in-out w-full h-[calc(100vh-150px)] ${
           dragging
             ? 'bg-white bg-opacity-30 border border-dashed'
             : 'bg-slate-500'

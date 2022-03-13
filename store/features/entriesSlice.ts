@@ -13,6 +13,11 @@ export interface IEntryPayload {
   description: string
 }
 
+export interface IEntryUpdatePayload {
+  id: string
+  status: StatusType
+}
+
 const initialState: IEntriesState = {
   entries: [
     {
@@ -76,10 +81,22 @@ export const entriesSlice = createSlice({
     },
     draggingAction: (state, action: PayloadAction<boolean>) => {
       state.dragging = action.payload
+    },
+    updateEntry: (state, action: PayloadAction<IEntryUpdatePayload>) => {
+      const { id, status } = action.payload
+      const entry = state.entries.find(entry => entry.id === id)
+      if (entry) {
+        entry.updatedAt = Date.now()
+        entry.status = status
+      }
     }
   }
 })
 
-export const { newEntryAction, draggingAction } = entriesSlice.actions
+export const {
+  newEntryAction,
+  draggingAction,
+  updateEntry
+} = entriesSlice.actions
 
 export default entriesSlice.reducer

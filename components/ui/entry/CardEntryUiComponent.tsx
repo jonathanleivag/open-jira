@@ -21,6 +21,7 @@ export const CardEntryUiComponent: FC<CardEntryUiComponentProps> = ({
       className='my-2 p-2 bg-slate-800 flex flex-col gap-2 text-xs'
       draggable
       onDragStart={onDragStart}
+      onDragEnd={() => dispatch(draggingAction(false))}
     >
       <div className='h-[95%]'>{description}</div>
       <div className='h-[5%] flex flex-row justify-end pr-1'>
