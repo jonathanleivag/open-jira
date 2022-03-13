@@ -1,6 +1,6 @@
 import { NextPage } from 'next'
 import { InitialLayout } from '../layout'
-import { ListEntryUiComponent } from '../components/ui/entry/ListEntryUiComponent'
+import { ListEntryUiComponent } from '../components/ui'
 
 const Home: NextPage = () => {
   return (

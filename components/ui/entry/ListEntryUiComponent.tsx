@@ -1,6 +1,6 @@
 import { FC, useMemo } from 'react'
 import { useSelector } from 'react-redux'
-import { CardEntryUiComponent } from '../..'
+import { CardEntryUiComponent, NewEntry } from '../..'
 import { RootState } from '../../../store/index'
 import { StatusType } from '../../../types'
 
@@ -24,6 +24,7 @@ export const ListEntryUiComponent: FC<ListEntryUiComponentProps> = ({
   return (
     <>
       <h2 className='p-2 '> {title} </h2>
+      <NewEntry />
       <ul className='w-full h-[calc(100vh-150px)] bg-slate-500 py-1 px-2 overflow-y-auto'>
         {entriesByStatus.map(entry => (
           <CardEntryUiComponent key={entry.id} entry={entry} />
