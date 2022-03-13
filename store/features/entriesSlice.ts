@@ -1,9 +1,15 @@
-import { createSlice } from '@reduxjs/toolkit'
+import { createSlice, PayloadAction } from '@reduxjs/toolkit'
 import { EntryInterface } from '../../interfaces'
 import { v4 as uuidv4 } from 'uuid'
+import { StatusType } from '../../types/statusType'
 
 export interface CounterState {
   entries: EntryInterface[]
+}
+
+export interface IEntryPayload {
+  status: StatusType
+  description: string
 }
 
 const initialState: CounterState = {
@@ -54,9 +60,21 @@ const initialState: CounterState = {
 export const menuSlice = createSlice({
   name: 'entries',
   initialState,
-  reducers: {}
+  reducers: {
+    newEntryAction: (state, action: PayloadAction<IEntryPayload>) => {
+      const { status, description } = action.payload
+      const newEntry: EntryInterface = {
+        id: uuidv4(),
+        description,
+        status,
+        createdAt: Date.now(),
+        updatedAt: Date.now()
+      }
+      state.entries = [newEntry, ...state.entries]
+    }
+  }
 })
 
-// export const {} = menuSlice.actions
+export const { newEntryAction } = menuSlice.actions
 
 export default menuSlice.reducer

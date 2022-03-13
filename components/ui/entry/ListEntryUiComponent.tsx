@@ -24,7 +24,7 @@ export const ListEntryUiComponent: FC<ListEntryUiComponentProps> = ({
   return (
     <>
       <h2 className='p-2 '> {title} </h2>
-      <NewEntry />
+      <NewEntry status={status} />
       <ul className='w-full h-[calc(100vh-150px)] bg-slate-500 py-1 px-2 overflow-y-auto'>
         {entriesByStatus.map(entry => (
           <CardEntryUiComponent key={entry.id} entry={entry} />

@@ -1,10 +1,18 @@
-import { useEffect, useState } from 'react'
+import { FC, useEffect, useState } from 'react'
 import { AiOutlinePlusCircle, AiOutlineSave } from 'react-icons/ai'
+import { useDispatch } from 'react-redux'
+import { newEntryAction } from '../../store/features/entriesSlice'
+import { StatusType } from '../../types'
 
-export const NewEntry = () => {
+export interface INewEntryProps {
+  status: StatusType
+}
+
+export const NewEntry: FC<INewEntryProps> = ({ status }) => {
   const [isAdd, setIsAdd] = useState<boolean>(false)
   const [text, setText] = useState<string>('')
   const [isError, setIsError] = useState<boolean | undefined>(undefined)
+  const dispatch = useDispatch()
 
   useEffect(() => {
     if (!isAdd) setIsError(undefined)
@@ -25,6 +33,8 @@ export const NewEntry = () => {
       setIsError(true)
     } else {
       setIsError(false)
+      setIsAdd(false)
+      dispatch(newEntryAction({ status, description: text }))
       setText('')
     }
   }
