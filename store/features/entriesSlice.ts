@@ -3,8 +3,9 @@ import { EntryInterface } from '../../interfaces'
 import { v4 as uuidv4 } from 'uuid'
 import { StatusType } from '../../types/statusType'
 
-export interface CounterState {
+export interface IEntriesState {
   entries: EntryInterface[]
+  dragging: boolean
 }
 
 export interface IEntryPayload {
@@ -12,7 +13,7 @@ export interface IEntryPayload {
   description: string
 }
 
-const initialState: CounterState = {
+const initialState: IEntriesState = {
   entries: [
     {
       id: uuidv4(),
@@ -54,10 +55,11 @@ const initialState: CounterState = {
       createdAt: Date.now(),
       updatedAt: Date.now()
     }
-  ]
+  ],
+  dragging: false
 }
 
-export const menuSlice = createSlice({
+export const entriesSlice = createSlice({
   name: 'entries',
   initialState,
   reducers: {
@@ -71,10 +73,13 @@ export const menuSlice = createSlice({
         updatedAt: Date.now()
       }
       state.entries = [newEntry, ...state.entries]
+    },
+    draggingAction: (state, action: PayloadAction<boolean>) => {
+      state.dragging = action.payload
     }
   }
 })
 
-export const { newEntryAction } = menuSlice.actions
+export const { newEntryAction, draggingAction } = entriesSlice.actions
 
-export default menuSlice.reducer
+export default entriesSlice.reducer

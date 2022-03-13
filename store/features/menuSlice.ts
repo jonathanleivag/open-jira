@@ -1,10 +1,10 @@
 import { createSlice } from '@reduxjs/toolkit'
 
-export interface CounterState {
+export interface IMenuState {
   open: boolean
 }
 
-const initialState: CounterState = {
+const initialState: IMenuState = {
   open: false
 }
 
