@@ -16,6 +16,7 @@ export interface IEntryPayload {
 export interface IEntryUpdatePayload {
   id: string
   status: StatusType
+  description?: string
 }
 
 const initialState: IEntriesState = {
@@ -33,7 +34,7 @@ export const entriesSlice = createSlice({
     draggingAction: (state, action: PayloadAction<boolean>) => {
       state.dragging = action.payload
     },
-    updateEntry: (state, action: PayloadAction<IEntryUpdatePayload>) => {
+    updateEntryAction: (state, action: PayloadAction<IEntryUpdatePayload>) => {
       const { id, status } = action.payload
       const entry = state.entries.find(entry => entry.id === id)
       if (entry) {
@@ -50,7 +51,7 @@ export const entriesSlice = createSlice({
 export const {
   newEntryAction,
   draggingAction,
-  updateEntry,
+  updateEntryAction,
   setEntries
 } = entriesSlice.actions
 
@@ -82,6 +83,18 @@ export const createEntry = ({ description, status }: IEntryPayload) => async (
         updatedAt: data.updatedAt
       })
     )
+  } catch (error) {
+    // eslint-disable-next-line no-console
+    console.log(error)
+  }
+}
+
+export const updateEntry = ({ id, status }: IEntryUpdatePayload) => async (
+  dispatch: Dispatch
+) => {
+  try {
+    await entriesApi.put(`/entries/${id}`, { status })
+    dispatch(updateEntryAction({ id, status }))
   } catch (error) {
     // eslint-disable-next-line no-console
     console.log(error)

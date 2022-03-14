@@ -21,7 +21,7 @@ export default function handler (
 
 const getEntries = async (res: NextApiResponse<Data>) => {
   await db.connect()
-  const entries = await EntryModel.find().sort({ createdAt: -1 })
+  const entries = await EntryModel.find().sort({ updatedAp: -1 })
   await db.disconnect()
   res.status(200).json(entries)
 }
