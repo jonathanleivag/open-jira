@@ -1,7 +1,8 @@
-import { createSlice, PayloadAction } from '@reduxjs/toolkit'
+import { createSlice, Dispatch, PayloadAction } from '@reduxjs/toolkit'
 import { EntryInterface } from '../../interfaces'
 import { v4 as uuidv4 } from 'uuid'
 import { StatusType } from '../../types/statusType'
+import { entriesApi } from '../../api'
 
 export interface IEntriesState {
   entries: EntryInterface[]
@@ -48,6 +49,9 @@ export const entriesSlice = createSlice({
         entry.updatedAt = Date.now()
         entry.status = status
       }
+    },
+    setEntries: (state, action: PayloadAction<EntryInterface[]>) => {
+      state.entries = action.payload
     }
   }
 })
@@ -55,7 +59,18 @@ export const entriesSlice = createSlice({
 export const {
   newEntryAction,
   draggingAction,
-  updateEntry
+  updateEntry,
+  setEntries
 } = entriesSlice.actions
+
+export const getEntries = () => async (dispatch: Dispatch) => {
+  try {
+    const { data } = await entriesApi.get<EntryInterface[]>('/entries')
+    dispatch(setEntries(data))
+  } catch (error) {
+    // eslint-disable-next-line no-console
+    console.log(error)
+  }
+}
 
 export default entriesSlice.reducer

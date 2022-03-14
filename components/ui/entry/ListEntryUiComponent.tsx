@@ -1,8 +1,9 @@
-import { DragEvent, FC, useMemo } from 'react'
+import { DragEvent, FC, useMemo, useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { CardEntryUiComponent, NewEntry } from '../..'
 import {
   draggingAction,
+  getEntries,
   updateEntry
 } from '../../../store/features/entriesSlice'
 import { RootState } from '../../../store/index'
@@ -26,6 +27,11 @@ export const ListEntryUiComponent: FC<ListEntryUiComponentProps> = ({
     // eslint-disable-next-line react-hooks/exhaustive-deps
     [entries]
   )
+
+  useEffect(() => {
+    dispatch(getEntries())
+    return () => {}
+  }, [dispatch])
 
   const onDragEntry = (event: DragEvent<HTMLUListElement>) => {
     const id = event.dataTransfer.getData('entryId')
