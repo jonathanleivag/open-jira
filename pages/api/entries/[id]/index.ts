@@ -1,8 +1,7 @@
-import mongoose from 'mongoose'
 import { NextApiRequest, NextApiResponse } from 'next'
-import { db } from '../../../database'
-import { EntryInterface } from '../../../interfaces'
-import EntryModel from '../../../models/EntryModel'
+import { db } from '../../../../database'
+import { EntryInterface } from '../../../../interfaces'
+import EntryModel from '../../../../models/EntryModel'
 
 type Data = { message: string } | EntryInterface
 
@@ -10,10 +9,10 @@ export default function handler (
   req: NextApiRequest,
   res: NextApiResponse<Data>
 ) {
-  const { id } = req.query
-  if (!mongoose.isValidObjectId(id)) {
-    return res.status(400).json({ message: 'El id no es valido' })
-  }
+  // const { id } = req.query
+  // if (!mongoose.isValidObjectId(id)) {
+  //   return res.status(400).json({ message: 'El id no es valido' })
+  // }
 
   switch (req.method) {
     case 'PUT':
