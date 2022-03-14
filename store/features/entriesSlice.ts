@@ -19,48 +19,7 @@ export interface IEntryUpdatePayload {
 }
 
 const initialState: IEntriesState = {
-  entries: [
-    {
-      id: uuidv4(),
-      description:
-        'pendiente: Anim laborum exercitation elit Lorem deserunt sit laboris enim duis.',
-      status: 'pending',
-      createdAt: Date.now(),
-      updatedAt: Date.now()
-    },
-    {
-      id: uuidv4(),
-      description:
-        'pendiente: Anim laborum exercitation elit Lorem deserunt sit laboris enim duis.',
-      status: 'pending',
-      createdAt: Date.now(),
-      updatedAt: Date.now()
-    },
-    {
-      id: uuidv4(),
-      description:
-        'En progreso: Pariatur magna eiusmod veniam laboris sint aute commodo non cupidatat officia.',
-      status: 'in-progress',
-      createdAt: Date.now(),
-      updatedAt: Date.now()
-    },
-    {
-      id: uuidv4(),
-      description:
-        'finalizado: Ipsum aute eu labore minim incididunt occaecat culpa.',
-      status: 'finished',
-      createdAt: Date.now(),
-      updatedAt: Date.now()
-    },
-    {
-      id: uuidv4(),
-      description:
-        'finalizado: Ipsum aute eu labore minim incididunt occaecat culpa.',
-      status: 'finished',
-      createdAt: Date.now(),
-      updatedAt: Date.now()
-    }
-  ],
+  entries: [],
   dragging: false
 }
 
