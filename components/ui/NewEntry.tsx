@@ -1,7 +1,7 @@
 import { FC, useEffect, useState } from 'react'
 import { AiOutlinePlusCircle, AiOutlineSave } from 'react-icons/ai'
 import { useDispatch } from 'react-redux'
-import { newEntryAction } from '../../store/features/entriesSlice'
+import { createEntry } from '../../store/features/entriesSlice'
 import { StatusType } from '../../types'
 
 export interface INewEntryProps {
@@ -34,7 +34,8 @@ export const NewEntry: FC<INewEntryProps> = ({ status }) => {
     } else {
       setIsError(false)
       setIsAdd(false)
-      dispatch(newEntryAction({ status, description: text }))
+      // dispatch(newEntryAction({ status, description: text }))
+      dispatch(createEntry({ status, description: text }))
       setText('')
     }
   }

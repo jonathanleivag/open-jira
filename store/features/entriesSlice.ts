@@ -1,6 +1,5 @@
 import { createSlice, Dispatch, PayloadAction } from '@reduxjs/toolkit'
 import { EntryInterface } from '../../interfaces'
-import { v4 as uuidv4 } from 'uuid'
 import { StatusType } from '../../types/statusType'
 import { entriesApi } from '../../api'
 
@@ -28,16 +27,8 @@ export const entriesSlice = createSlice({
   name: 'entries',
   initialState,
   reducers: {
-    newEntryAction: (state, action: PayloadAction<IEntryPayload>) => {
-      const { status, description } = action.payload
-      const newEntry: EntryInterface = {
-        id: uuidv4(),
-        description,
-        status,
-        createdAt: Date.now(),
-        updatedAt: Date.now()
-      }
-      state.entries = [newEntry, ...state.entries]
+    newEntryAction: (state, action: PayloadAction<EntryInterface>) => {
+      state.entries = [action.payload, ...state.entries]
     },
     draggingAction: (state, action: PayloadAction<boolean>) => {
       state.dragging = action.payload
@@ -67,6 +58,30 @@ export const getEntries = () => async (dispatch: Dispatch) => {
   try {
     const { data } = await entriesApi.get<EntryInterface[]>('/entries')
     dispatch(setEntries(data))
+  } catch (error) {
+    // eslint-disable-next-line no-console
+    console.log(error)
+  }
+}
+
+export const createEntry = ({ description, status }: IEntryPayload) => async (
+  dispatch: Dispatch
+) => {
+  try {
+    const { data } = await entriesApi.post<EntryInterface>('/entries', {
+      description,
+      status
+    })
+
+    dispatch(
+      newEntryAction({
+        status: data.status,
+        description: data.description,
+        id: data.id,
+        createdAt: data.createdAt,
+        updatedAt: data.updatedAt
+      })
+    )
   } catch (error) {
     // eslint-disable-next-line no-console
     console.log(error)
