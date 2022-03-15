@@ -89,12 +89,14 @@ export const createEntry = ({ description, status }: IEntryPayload) => async (
   }
 }
 
-export const updateEntry = ({ id, status }: IEntryUpdatePayload) => async (
-  dispatch: Dispatch
-) => {
+export const updateEntry = ({
+  id,
+  status,
+  description
+}: IEntryUpdatePayload) => async (dispatch: Dispatch) => {
   try {
-    await entriesApi.put(`/entries/${id}`, { status })
-    dispatch(updateEntryAction({ id, status }))
+    await entriesApi.put(`/entries/${id}`, { status, description })
+    dispatch(updateEntryAction({ id, status, description }))
   } catch (error) {
     // eslint-disable-next-line no-console
     console.log(error)

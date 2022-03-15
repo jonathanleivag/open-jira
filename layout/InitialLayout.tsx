@@ -1,7 +1,6 @@
 import { FC } from 'react'
 import { NavBarUiComponent, SidebarUiComponent } from '../components'
-import { Provider } from 'react-redux'
-import { store } from '../store'
+
 import Head from 'next/head'
 
 export interface IInitialLayoutProps {
@@ -10,7 +9,7 @@ export interface IInitialLayoutProps {
 
 export const InitialLayout: FC<IInitialLayoutProps> = ({ children, title }) => {
   return (
-    <Provider store={store}>
+    <>
       <Head>
         <title> {title ? `${title} - Open Jira` : 'Open Jira'} </title>
         <meta name='viewport' content='initial-scale=1.0, width=device-width' />
@@ -20,6 +19,6 @@ export const InitialLayout: FC<IInitialLayoutProps> = ({ children, title }) => {
         <NavBarUiComponent />
         <main className='pt-10 md:pt-0'> {children} </main>
       </section>
-    </Provider>
+    </>
   )
 }

@@ -1,10 +1,13 @@
 import { GetServerSideProps, GetStaticPropsResult, NextPage } from 'next'
-import { AiOutlineSave } from 'react-icons/ai'
-import { InitialLayout } from '../../layout'
-import { StatusType } from '../../types'
 import { useState } from 'react'
+import { AiOutlineSave } from 'react-icons/ai'
+import { useDispatch } from 'react-redux'
+import Swal from 'sweetalert2'
 import { dbEntry } from '../../database'
 import { EntryInterface } from '../../interfaces'
+import { InitialLayout } from '../../layout'
+import { updateEntry } from '../../store/features/entriesSlice'
+import { StatusType } from '../../types'
 
 const states: StatusType[] = ['pending', 'in-progress', 'finished']
 
@@ -19,6 +22,31 @@ export interface IEntryPage {
 const EntryPage: NextPage<IEntryPage> = ({ entry }) => {
   const [stateValue, setStateValue] = useState<StatusType>(entry.status)
   const [text, setText] = useState<string>(entry.description)
+  const dispatch = useDispatch()
+
+  const onSave = async () => {
+    if (text.length === 0) {
+      Swal.fire('Error', 'No puede estar vacio el campo', 'error')
+    } else {
+      Swal.fire({
+        title: '¿Deseas guardar los cambios?',
+        showCancelButton: true,
+        confirmButtonText: 'Guardar'
+      }).then(result => {
+        /* Read more about isConfirmed, isDenied below */
+        if (result.isConfirmed) {
+          dispatch(
+            updateEntry({
+              id: entry._id,
+              description: text,
+              status: stateValue
+            })
+          )
+          Swal.fire('Guardado!!', '', 'success')
+        }
+      })
+    }
+  }
 
   return (
     <InitialLayout title={`${text.substring(0, 5)}...`}>
@@ -65,7 +93,10 @@ const EntryPage: NextPage<IEntryPage> = ({ entry }) => {
               ))}
             </div>
           </div>
-          <button className='bg-blue-300 w-full flex flex-row justify-center items-center gap-2 text-slate-800 py-1'>
+          <button
+            onClick={onSave}
+            className='bg-blue-300 w-full flex flex-row justify-center items-center gap-2 text-slate-800 py-1'
+          >
             <AiOutlineSave /> <span>Guardar</span>
           </button>
         </div>
