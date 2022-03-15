@@ -19,6 +19,18 @@ export interface IEntryPage {
   entry: IEntryExtend
 }
 
+const Toast = Swal.mixin({
+  toast: true,
+  position: 'top-end',
+  showConfirmButton: false,
+  timer: 3000,
+  timerProgressBar: true,
+  didOpen: toast => {
+    toast.addEventListener('mouseenter', Swal.stopTimer)
+    toast.addEventListener('mouseleave', Swal.resumeTimer)
+  }
+})
+
 const EntryPage: NextPage<IEntryPage> = ({ entry }) => {
   const [stateValue, setStateValue] = useState<StatusType>(entry.status)
   const [text, setText] = useState<string>(entry.description)
@@ -42,7 +54,11 @@ const EntryPage: NextPage<IEntryPage> = ({ entry }) => {
               status: stateValue
             })
           )
-          Swal.fire('Guardado!!', '', 'success')
+
+          Toast.fire({
+            icon: 'success',
+            title: 'Se guardaron los cambios'
+          })
         }
       })
     }
