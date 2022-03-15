@@ -5,6 +5,7 @@ import { AiOutlineSave } from 'react-icons/ai'
 import { useDispatch } from 'react-redux'
 import Swal from 'sweetalert2'
 import { dbEntry } from '../../database'
+import { getFormatDistanceToNow } from '../../helpers'
 import { EntryInterface } from '../../interfaces'
 import { InitialLayout } from '../../layout'
 import { deleteEntry, updateEntry } from '../../store/features/entriesSlice'
@@ -97,7 +98,9 @@ const EntryPage: NextPage<IEntryPage> = ({ entry }) => {
             </button>
           </div>
           <h3>Entrada: {text.substring(0, 40)}... </h3>
-          <p className='text-xs'>Creada hace 30 minutos</p>
+          <p className='text-xs'>
+            Creada hace {getFormatDistanceToNow(entry.updatedAt)}
+          </p>
           <div className='w-[98%] border border-gray-300 mt-10 mb-5 py-3 px-1'>
             <textarea
               className='w-full h-full resize-none focus:outline-none bg-transparent'

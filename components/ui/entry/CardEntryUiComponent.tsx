@@ -1,6 +1,7 @@
 import { useRouter } from 'next/router'
 import { DragEvent, FC } from 'react'
 import { useDispatch } from 'react-redux'
+import { getFormatDistanceToNow } from '../../../helpers'
 import { EntryInterface } from '../../../interfaces'
 import { draggingAction } from '../../../store/features/entriesSlice'
 export interface CardEntryUiComponentProps {
@@ -8,7 +9,7 @@ export interface CardEntryUiComponentProps {
 }
 
 export const CardEntryUiComponent: FC<CardEntryUiComponentProps> = ({
-  entry: { id, description, createdAt }
+  entry: { id, description, updatedAt }
 }) => {
   const dispatch = useDispatch()
   const router = useRouter()
@@ -35,7 +36,7 @@ export const CardEntryUiComponent: FC<CardEntryUiComponentProps> = ({
       >
         <div className='h-[95%]'>{description}</div>
         <div className='h-[5%] w-full flex flex-row justify-end pr-1'>
-          hece 30 minutos
+          {getFormatDistanceToNow(updatedAt)}
         </div>
       </button>
     </li>
