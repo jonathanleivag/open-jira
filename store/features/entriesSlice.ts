@@ -44,6 +44,9 @@ export const entriesSlice = createSlice({
     },
     setEntries: (state, action: PayloadAction<EntryInterface[]>) => {
       state.entries = action.payload
+    },
+    deleteEntryAction: (state, action: PayloadAction<string>) => {
+      state.entries = state.entries.filter(entry => entry.id !== action.payload)
     }
   }
 })
@@ -52,7 +55,8 @@ export const {
   newEntryAction,
   draggingAction,
   updateEntryAction,
-  setEntries
+  setEntries,
+  deleteEntryAction
 } = entriesSlice.actions
 
 export const getEntries = () => async (dispatch: Dispatch) => {
@@ -97,6 +101,16 @@ export const updateEntry = ({
   try {
     await entriesApi.put(`/entries/${id}`, { status, description })
     dispatch(updateEntryAction({ id, status, description }))
+  } catch (error) {
+    // eslint-disable-next-line no-console
+    console.log(error)
+  }
+}
+
+export const deleteEntry = (id: string) => async (dispatch: Dispatch) => {
+  try {
+    await entriesApi.delete(`/entries/${id}`)
+    dispatch(deleteEntryAction(id))
   } catch (error) {
     // eslint-disable-next-line no-console
     console.log(error)

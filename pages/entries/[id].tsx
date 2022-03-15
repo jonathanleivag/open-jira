@@ -1,4 +1,5 @@
 import { GetServerSideProps, GetStaticPropsResult, NextPage } from 'next'
+import { useRouter } from 'next/router'
 import { useState } from 'react'
 import { AiOutlineSave } from 'react-icons/ai'
 import { useDispatch } from 'react-redux'
@@ -6,7 +7,7 @@ import Swal from 'sweetalert2'
 import { dbEntry } from '../../database'
 import { EntryInterface } from '../../interfaces'
 import { InitialLayout } from '../../layout'
-import { updateEntry } from '../../store/features/entriesSlice'
+import { deleteEntry, updateEntry } from '../../store/features/entriesSlice'
 import { StatusType } from '../../types'
 
 const states: StatusType[] = ['pending', 'in-progress', 'finished']
@@ -35,6 +36,7 @@ const EntryPage: NextPage<IEntryPage> = ({ entry }) => {
   const [stateValue, setStateValue] = useState<StatusType>(entry.status)
   const [text, setText] = useState<string>(entry.description)
   const dispatch = useDispatch()
+  const router = useRouter()
 
   const onSave = async () => {
     if (text.length === 0) {
@@ -64,12 +66,33 @@ const EntryPage: NextPage<IEntryPage> = ({ entry }) => {
     }
   }
 
+  const onDelete = () => {
+    Swal.fire({
+      title: '¿Deseas eliminar la entrada?',
+      showCancelButton: true,
+      confirmButtonText: 'Eliminar'
+    }).then(result => {
+      /* Read more about isConfirmed, isDenied below */
+      if (result.isConfirmed) {
+        dispatch(deleteEntry(entry._id))
+        router.replace('/')
+        Toast.fire({
+          icon: 'success',
+          title: 'Se elimino la entrada'
+        })
+      }
+    })
+  }
+
   return (
     <InitialLayout title={`${text.substring(0, 5)}...`}>
       <div className='pt-10 min-h-[calc(100vh-2.5rem)] min-w-[100vw] flex flex-row justify-center'>
         <div className='w-[95%] md:w-[55%] h-[370px] md:h-[300px] bg-slate-600 mt-5 px-3 pt-3 relative'>
           <div className='absolute top-2 right-2 w-full flex flex-row justify-end items-center my-2'>
-            <button className='text-sm text-red-500 hover:text-red-600'>
+            <button
+              onClick={onDelete}
+              className='text-sm text-red-500 hover:text-red-600'
+            >
               Eliminar
             </button>
           </div>
