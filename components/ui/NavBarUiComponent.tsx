@@ -1,3 +1,4 @@
+import Link from 'next/link'
 import { FC } from 'react'
 import { AiOutlineMenu } from 'react-icons/ai'
 import { useDispatch } from 'react-redux'
@@ -12,7 +13,9 @@ export const NavBarUiComponent: FC = () => {
         <button onClick={() => dispatch(toggleMenu())}>
           <AiOutlineMenu className='text-xl' />
         </button>
-        <p>OpenJira</p>
+        <Link href='/' passHref>
+          <a>OpenJira</a>
+        </Link>
       </div>
     </nav>
   )
